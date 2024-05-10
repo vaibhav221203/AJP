@@ -1,0 +1,99 @@
+package com.vaibhav;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+public class Expt3 implements ActionListener{
+
+	JFrame f;
+	JTextField sub1,sub2,sub3,sub4;
+	JLabel l1,l2,l3,l4;
+	JButton b;
+	Expt3(){
+		f=new JFrame();
+		f.setSize(500,500);
+		f.setLayout(null);
+		f.setTitle("Swing is here");
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		init();
+		add_component();
+	}
+	void init() {
+		l1=new JLabel("Enter CN Marks");
+		sub1=new JTextField(4);
+		l2=new JLabel("Enter PM Marks");
+		sub2=new JTextField(4);
+		l3=new JLabel("Enter PDC Marks");
+		sub3=new JTextField(4);
+		l4=new JLabel("Enter Java Marks");
+		sub4=new JTextField(4);
+		b=new JButton("calculate");
+	}
+	void add_component() {
+		l1.setBounds(30, 50, 75, 100);
+		sub1.setBounds(120, 50, 75, 50);
+		l2.setBounds(30, 100, 75, 100);
+		sub2.setBounds(120, 100, 75, 50);
+		l3.setBounds(30, 180, 75, 100);
+		sub3.setBounds(120, 180, 75, 100);
+		l4.setBounds(30, 250, 75, 100);
+		sub4.setBounds(120, 250, 75, 50);
+		
+		f.add(l1);
+		f.add(l2);
+		f.add(l3);
+		f.add(l4);
+		f.add(sub1);
+		f.add(sub2);
+		f.add(sub3);
+		f.add(sub4);
+		f.add(b);
+		b.addActionListener(this);
+		b.setBounds(300, 300, 100, 100);
+		
+	}
+	public void actionPerformed(ActionEvent k) {
+		if(k.getSource()==b) {
+			calculatelol();
+		}
+	}
+	public void calculatelol() {
+		int total=0;
+		total+=Integer.parseInt(sub1.getText());
+		total+=Integer.parseInt(sub2.getText());
+		total+=Integer.parseInt(sub3.getText());
+		total+=Integer.parseInt(sub4.getText());
+		double per=(double)total/4;
+		String res=(per>=60)?"Passed":"failed";
+		display(total,per,res);
+	}
+	public void display(int total,double per,String res) {
+		JFrame rs=new JFrame("output");
+		rs.setLayout(null);
+		JLabel ll1,ll2,ll3;
+		ll1=new JLabel("Total Marks: "+total);
+		ll2=new JLabel("Percentage Marks: "+per+"%");
+		ll3=new JLabel("Result: "+res);
+		
+		ll1.setBounds(20, 20, 150, 20);
+		ll2.setBounds(20, 50, 150, 20);
+		ll3.setBounds(20, 80, 150, 20);
+		
+		rs.add(ll1);
+		rs.add(ll2);
+		rs.add(ll3);
+		rs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		rs.setVisible(true);
+		f.setVisible(false);
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new Expt3();
+
+	}
+
+}
