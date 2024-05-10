@@ -1,0 +1,99 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class Jdbc {
+	 static String url="jdbc:mysql://localhost:3306/MOCK";
+	 static String username="root";
+	 static String password="9907";
+	public static void main(String[] args) throws SQLException, ClassNotFoundException{
+		// TODO Auto-generated method stub
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection(url,username,password);
+		System.out.println("Connection SuccessFully!!");
+		Scanner sc=new Scanner(System.in);
+		while(true) {
+			System.out.println("1)insert\n2)read\n3)update\n4)delete\n5)EXit");
+			int choice=sc.nextInt();
+			switch(choice) {
+			case 1:
+				insertrec(con);
+				break;
+			case 2:
+				readrec(con);
+				break;
+			case 3:
+				update(con);
+				break;
+			case 4:
+				delete(con);
+				break;
+			case 5:
+				System.out.println("Thank You");
+				con.close();
+				
+				return;
+			default:
+				System.out.println("Choose Correct option");
+			}
+		}
+	}
+	public  static void insertrec(Connection con) throws SQLException {
+		Scanner sc=new Scanner(System.in);
+		int roll=sc.nextInt();
+		String name=sc.next();
+		String query="INSERT INTO lol VALUES(?,?)";
+		
+			PreparedStatement st=con.prepareStatement(query);
+			st.setInt(1, roll);
+			st.setString(2, name);
+			int row=st.executeUpdate();
+			if(row>0) {
+				System.out.println("Data Inserted Successfully");
+				
+		}
+		
+	}
+	public  static void readrec(Connection con)throws SQLException  {
+		String query="SELECT * FROM LOL";
+		Statement st=con.createStatement();
+		
+		ResultSet rs=st.executeQuery(query);
+		while(rs.next()) {
+			System.out.println(rs.getInt(1)+"\t"+rs.getString(2));
+		}
+	}
+	public  static void update(Connection con)throws SQLException  {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Roll No");
+		int roll=sc.nextInt();
+		System.out.println("Enter changed name");
+		String name=sc.next();
+		String query="UPDATE LOL SET NAME=? WHERE ROLLNO=?";
+		
+			PreparedStatement st=con.prepareStatement(query);
+			st.setString(1,name);
+			st.setInt(2, roll);
+			int row=st.executeUpdate();
+			if(row>0) {
+				System.out.println("Data Updated Successfully");
+			}
+				
+	}
+	public  static void delete(Connection con)throws SQLException  {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Roll No");
+		int roll=sc.nextInt();
+		String query="DELETE FROM LOL WHERE ROLLNO=?";
+		
+			PreparedStatement st=con.prepareStatement(query);
+			
+			st.setInt(1, roll);
+			int row=st.executeUpdate();
+			if(row>0) {
+				System.out.println("Data Deleted Successfully");
+			}
+				
+	}
+
+
+}
